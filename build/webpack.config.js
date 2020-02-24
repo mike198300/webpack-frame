@@ -14,13 +14,13 @@ function resolve (dir) {
 
 const webpack_config = {
     mode: 'development',
-    "context": "C:\\Users\\Mike\\WebstormProjects\\webpack-frame",
+    context: "C:\\Users\\Mike\\WebstormProjects\\webpack-frame",
     entry: {
         index: './src/js/index.js',
         page1: './src/js/page1.js'
     },
     output: {
-        path: path.join(__dirname, '..', 'dist/js'),
+        path: path.join(__dirname, '..', 'dist'),
         filename: "[name].[hash:8].js",
         publicPath: '/'
     },

@@ -4,8 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dev-flex": "webpack-dev-server --inline --progress --config ./build/webpack.dev.conf.js",
-    "dev-single": "webpack-dev-server --env.production=false --inline --progress --config ./build/webpack.config.js",
+    "dev-flex":   "webpack-dev-server --inline --progress --config ./build/webpack.dev.conf.js",
+    "dev-single": "webpack-dev-server --inline --progress --config ./build/webpack.config.js",
     "build-single": "node build/build-single-config.js",
     "build-flex": "node build/build-flex.js"
   },
