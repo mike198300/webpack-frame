@@ -5,6 +5,8 @@ const webpack = require('webpack')
 const ManifestPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const config = require('../config')
+
 
 function resolve (dir) {
     return path.join(__dirname, '..', dir)
@@ -12,6 +14,7 @@ function resolve (dir) {
 
 const webpack_config = {
     mode: 'development',
+    "context": "C:\\Users\\Mike\\WebstormProjects\\webpack-frame",
     entry: {
         index: './src/js/index.js',
         page1: './src/js/page1.js'
@@ -22,7 +25,8 @@ const webpack_config = {
         publicPath: '/'
     },
     devServer: {
-        // contentBase: path.join(__dirname, 'dist'),
+        publicPath: config.dev.assetsPublicPath,
+        contentBase: path.join(__dirname, '../dist'),
         host: '127.0.0.1',
         port: 9000,
 
@@ -36,12 +40,12 @@ const webpack_config = {
         // },
 
         // 一切服务都启用 gzip 压缩：
-        // compress: true,
+        compress: true,
 
         // clientLogLever: 'info',
 
         // 启用 webpack 的 模块热替换 功能
-        // hot: true,
+        hot: true,
 
         // Enables Hot Module Replacement (see devServer.hot) without
         //     page refresh as fallback in case of build failures.
@@ -135,13 +139,31 @@ const webpack_config = {
                 chunkFilename: '../css/[name].[hash:8].css',
             }
         ),
+        // new HtmlWebpackPlugin(
+        //     {
+        //         title: "index",
+        //         filename: "../index.html",
+        //         template: "./src/template/index.html",
+        //         chunks: ['index']
+        //     }
+        // ),
         new HtmlWebpackPlugin(
-            {
-                title: "index",
-                filename: "../main.html",
-                template: "./index.html",
-                chunks: ['index']
-            }
+          {
+              title: "index",
+              filename: path.resolve(__dirname, '../dist/index.html'),
+              template: "./src/template/index.html",
+              chunks: ['index'],
+              inject: true,
+              minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeAttributeQuotes: true
+                  // more options:
+                  // https://github.com/kangax/html-minifier#options-quick-reference
+              },
+              // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+              chunksSortMode: 'dependency'
+          }
         ),
         new HtmlWebpackPlugin(
             {

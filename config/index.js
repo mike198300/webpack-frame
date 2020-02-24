@@ -6,8 +6,13 @@ module.exports = {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'dist',
+    assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+
+
+    /**
+     * Source Maps
+     */
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -23,11 +28,28 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
+    host: 'localhost',
     port: 8080,
     autoOpenBrowser: true,
-    assetsSubDirectory: '',
-    assetsPublicPath: '',
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
     proxyTable: {},
+    errorOverlay: true,
+    notifyOnErrors: true,
+    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+
+    /**
+     * Source Maps
+     */
+
+    // https://webpack.js.org/configuration/devtool/#development
+    devtool: 'cheap-module-eval-source-map',
+
+    // If you have problems debugging vue-files in devtools,
+    // set this to false - it *may* help
+    // https://vue-loader.vuejs.org/en/options.html#cachebusting
+    cacheBusting: true,
+
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

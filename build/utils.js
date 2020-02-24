@@ -24,17 +24,18 @@ exports.cssLoaders = function (options) {
       }
       return loader + (options.sourceMap ? extraParamChar + 'sourceMap' : '')
     }).join('!')
+    return sourceLoader
 
     // Extract CSS when that option is specified
     // (which is the case during production build)
-    if (options.extract) {
-      return ExtractTextPlugin.extract({
-        use: sourceLoader,
-        fallback: 'vue-style-loader'
-      })
-    } else {
-      return ['vue-style-loader', sourceLoader].join('!')
-    }
+    // if (options.extract) {
+    //   return ExtractTextPlugin.extract({
+    //     use: sourceLoader,
+    //     fallback: 'vue-style-loader'
+    //   })
+    // } else {
+    //   return ['vue-style-loader', sourceLoader].join('!')
+    // }
   }
 
   // http://vuejs.github.io/vue-loader/en/configurations/extract-css.html
@@ -61,4 +62,22 @@ exports.styleLoaders = function (options) {
     })
   }
   return output
+}
+
+exports.createNotifierCallback = () => {
+  const notifier = require('node-notifier')
+
+  return (severity, errors) => {
+    if (severity !== 'error') return
+
+    const error = errors[0]
+    const filename = error.file && error.file.split('!').pop()
+
+    notifier.notify({
+      title: packageConfig.name,
+      message: severity + ': ' + error.name,
+      subtitle: filename || '',
+      icon: path.join(__dirname, 'logo.png')
+    })
+  }
 }
